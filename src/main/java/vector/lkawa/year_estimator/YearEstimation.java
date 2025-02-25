@@ -6,7 +6,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-
+@Table(indexes = @Index(columnList = "name"))
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
