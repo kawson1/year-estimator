@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Year Estimator</title>
+</head>
+<body>
+
+<div class="container">
+    <h2>Year Estimator</h2>
+
+    <input type="text" id="nameInput" placeholder="Wpisz imię">
+    <button onclick="getEstimation()">Sprawdź</button>
+
+    <h3>Wynik:</h3>
+    <pre id="result"></pre>
+
+    <h3>Historia wyszukiwania:</h3>
+    <button onclick="sortHistoryByName()" class="bg-blue-500 text-white px-4 py-2 rounded">
+        Sortuj po nazwie
+    </button>
+    <button onclick="sortHistoryByAge()" class="bg-blue-500 text-white px-4 py-2 rounded">
+        Sortuj po wieku
+    </button>
+    <div id="history"></div>
+    <div>
+        <button onclick="prevPage()" id="prevBtn"><- Poprzednia</button>
+        <span id="pageNumber">Strona: 1</span>
+        <button onclick="nextPage()" id="nextBtn">Następna -></button>
+    </div>
+</div>
+
+<script>
+    let currentPage = 0;
+    let totalPages = 0;
+    let nameSorting = "desc";
+    let ageSorting = "desc";
+    let currentSorting = "";
+
+    async function getEstimation() {
+        const name = document.getElementById("nameInput").value.trim();
+        if (!name)
+            return alert("Wpisz imię!");
+
+        const url = `http://localhost:8080/estimations/${name}`;
+        try {
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || "Wystąpił błąd serwera");
+            }
+
+            const data = await response.json();
+            document.getElementById("result").textContent = JSON.stringify(data, null, 2);
+        } catch (error) {
+            document.getElementById("result").textContent = `Błąd: ${error.message}`;
+        }
+    }
+
+    async function getHistory(page) {
+        let url = `http://localhost:8080/estimations?page=${page}`;
+
+        if (currentSorting) {
+            url += `&sort=${currentSorting}`;
+        }
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            totalPages = data.totalPages;
+            displayHistory(data);
+        } catch (error) {
+            document.getElementById("history").textContent = "Błąd podczas pobierania historii";
+        }
+    }
+
+    function displayHistory(data) {
+        const historyDiv = document.getElementById("history");
+        historyDiv.innerHTML = "";
+        data.content.forEach(item => {
+            const entry = document.createElement("pre");
+            entry.textContent = JSON.stringify(item, null, 2);
+            historyDiv.appendChild(entry);
+        });
+        document.getElementById("pageNumber").textContent = `Strona: ${currentPage + 1}`;
+    }
+
+    function nextPage() {
+        if (currentPage == totalPages - 1)
+            return;
+        currentPage++;
+        getHistory(currentPage);
+    }
+
+    function prevPage() {
+        if (currentPage > 0) {
+            currentPage--;
+            getHistory(currentPage);
+        }
+    }
+
+    function sortHistoryByName() {
+        currentSorting = `name,${nameSorting}`;
+        getHistory(currentPage);
+        nameSorting = nameSorting === "desc" ? "asc" : "desc";
+    }
+
+    function sortHistoryByAge() {
+        currentSorting = `age,${ageSorting}`;
+        getHistory(currentPage);
+        ageSorting = ageSorting === "desc" ? "asc" : "desc";
+    }
+
+    getHistory(currentPage);
+</script>
+
+</body>
+</html>

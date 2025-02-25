@@ -1,0 +1,4 @@
+q2: czy jesli serwis api agify jest wyłączony to mamy jakoś na to reagować, czy timeout i zwrócenie odpowiedniego kodu wystarczy?
+q3: jeśli użytkownik kliknie opcję posortowania, to czy sortujemy tylko aktualnie wyświetlane wyniki historii wyszukiwania, czy następna strona paginacji też musi być posortowana?
+q4: czy wymagana jest konfiguracja cors tylko dla serwera front, czy mogę autoryzować wszystko?
+q5: czy musimy trzymac informacje o aktualnej stronie historii? czy po odswiezeniu moze wrocic do 1 strony?
