@@ -2,3 +2,19 @@ q2: czy jesli serwis api agify jest wyłączony to mamy jakoś na to reagować, 
 q3: jeśli użytkownik kliknie opcję posortowania, to czy sortujemy tylko aktualnie wyświetlane wyniki historii wyszukiwania, czy następna strona paginacji też musi być posortowana?
 q4: czy wymagana jest konfiguracja cors tylko dla serwera front, czy mogę autoryzować wszystko?
 q5: czy musimy trzymac informacje o aktualnej stronie historii? czy po odswiezeniu moze wrocic do 1 strony?
+
+
+czy aplikacja ma obslugiwac uzytkownikow (np. kazdy uzytkownik ma wlasna historie wyszukiwan)?
+jakie kryteria sortowania historii wyszukiwania maja byc domyslne?
+czy historia powinna byc ograniczona do okreslonej liczby rekordow?
+czy sa wymagania dotyczace wydajnosci i skalowalnosci?
+czy aplikacja ma miec jakies ograniczenia dostepu (np. autoryzacja, api key)?
+czy api ma byc dostepne publicznie, czy tylko dla okreslonych uzytkownikow?
+jakie formaty odpowiedzi sa wymagane (np. json, xml)?
+
+
+
+
+
+
+
