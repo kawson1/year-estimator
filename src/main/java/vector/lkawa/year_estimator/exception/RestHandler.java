@@ -15,7 +15,7 @@ public class RestHandler {
 
     @ExceptionHandler(value = RestClientException.class)
     protected ResponseEntity<ApiError> handleRestClientException(Exception ex) {
-        log.error("Blad podczas komunikacji z zewnetrznym serwisem: {}", ex.getMessage(), ex);
+        log.error("Error during communication with external API: {}", ex.getMessage(), ex);
         return new ResponseEntity<>(new ApiError(Message.API.Exception.externalServiceError()), HttpStatus.SERVICE_UNAVAILABLE);
     }
 
